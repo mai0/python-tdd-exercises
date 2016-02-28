@@ -1,9 +1,12 @@
 
+
 def reverse_list(l):
     """
     Reverses order of elements in list l.
-    """
-    return None
+      """
+    r = l 
+    l.reverse()    
+    return r
 
 
 def test_reverse_list():
@@ -16,6 +19,7 @@ def reverse_string(s):
     """
     Reverses order of characters in string s.
     """
+    return s[::-1]
     return None
 
 
@@ -30,7 +34,10 @@ def is_english_vowel(c):
     Returns True if c is an english vowel
     and False otherwise.
     """
-    return None
+    v = {'a', 'e', 'i', 'o', 'u', 'y', 'A', 'E', 'I', 'O', 'U', 'Y'}
+    if c in v:
+    	return True
+    return False
 
 
 def test_is_english_vowel():
@@ -57,7 +64,12 @@ def count_num_vowels(s):
     """
     Returns the number of vowels in a string s.
     """
-    return None
+    num_vowels = 0
+    v = {'a', 'e', 'i', 'o', 'u', 'y', 'A', 'E', 'I', 'O', 'U', 'Y'}
+    for char in s:
+        if char in v:
+           num_vowels = num_vowels + 1
+    return num_vowels
 
 
 def test_count_num_vowels():
@@ -79,8 +91,8 @@ def histogram(l):
     """
     Converts a list of integers into a simple string histogram.
     """
-    return None
-
+    a = ['#'*b for b in l]
+    return '\n'.join(a)
 
 def test_histogram():
     assert histogram([2, 5, 1]) == '##\n#####\n#'
@@ -93,7 +105,8 @@ def get_word_lengths(s):
     Returns a list of integers representing
     the word lengths in string s.
     """
-    return None
+    m = [len(x) for x in s.split()]
+    return m
 
 
 def test_get_word_lengths():
@@ -108,7 +121,8 @@ def find_longest_word(s):
     Returns the longest word in string s.
     In case there are several, return the first.
     """
-    return None
+    long = max(s.split(), key=len)
+    return long
 
 
 def test_find_longest_word():
@@ -125,7 +139,11 @@ def validate_dna(s):
     Return True if the DNA string only contains characters
     a, c, t, or g (lower or uppercase). False otherwise.
     """
-    return None
+    valid = {'A','C','T','G','a','c','t','g'}
+    for letter in s:
+        if letter not in valid:
+            return False
+    return True
 
 
 def test_validate_dna():
@@ -142,7 +160,13 @@ def base_pair(c):
     of the base pair. If the base is not recognized,
     return 'unknown'.
     """
-    return None
+    c = c.lower()
+    complement = {'a':'t','g':'c','t':'a','c':'g'}
+    if c in  complement:
+    	return complement[c]
+    else:
+    	return 'unknown'
+
 
 
 def test_base_pair():
@@ -163,10 +187,11 @@ def test_base_pair():
 def transcribe_dna_to_rna(s):
     """
     Return string s with each letter T replaced by U.
-    Result is always uppercase.
+    Result is always uppercase. 
     """
-    return None
+    s = s.replace('t','U').replace('T','U').replace('a','A').replace('g','G').replace('c','C')
 
+    return s
 
 def test_transcribe_dna_to_rna():
     dna = 'CCGGAAGAGCTTACTTAGccggaagagcttacttag'
@@ -180,7 +205,10 @@ def get_complement(s):
     Return the DNA complement in uppercase
     (A -> T, T-> A, C -> G, G-> C).
     """
-    return None
+    complement = {'A':'T', 'G':'C', 'T':'A', 'C':'G','a':'T','g':'C','t':'A','c':'G'}
+    bases = [complement[base] for base in s]
+    return ''.join(bases)
+
 
 
 def test_get_complement():
@@ -195,7 +223,10 @@ def get_reverse_complement(s):
     Return the reverse complement of string s
     (complement reversed in order).
     """
-    return None
+    complement = {'A':'T', 'G':'C', 'T':'A', 'C':'G','a':'T','g':'C','t':'A','c':'G'}
+    reverse_complement = "".join(complement.get(base, base) for base in reversed(s))
+    return reverse_complement
+
 
 
 def test_get_reverse_complement():
@@ -209,10 +240,11 @@ def remove_substring(substring, string):
     """
     Returns string with all occurrences of substring removed.
     """
-    return None
+    return string.replace(substring,'')
 
 
-def test_remove_substring():
+
+def test_remove_substring():    
     assert remove_substring('GAA', 'CCGGAAGAGCTTACTTAG') == 'CCGGAGCTTACTTAG'
     assert remove_substring('CCG', 'CCGGAAGAGCTTACTTAG') == 'GAAGAGCTTACTTAG'
     assert remove_substring('TAG', 'CCGGAAGAGCTTACTTAG') == 'CCGGAAGAGCTTACT'
@@ -227,7 +259,11 @@ def get_position_indices(triplet, dna):
     in a DNA sequence. We start counting from 0
     and jump by 3 characters from one position to the next.
     """
-    return None
+    codons = [dna[i:i+3] for i in range(0,len(dna),3)]
+    a = codons.count(triplet)
+    a = [i for i,v in enumerate(codons) if v==triplet]
+    return a
+
 
 
 def test_get_position_indices():
@@ -246,8 +282,13 @@ def get_3mer_usage_chart(s):
     The list is alphabetically sorted by the name
     of the 3-mer.
     """
-    return None
+    codons = [s[i:i+3] for i in range(0,len(s),3)]
+    codons.extend([s[i:i+3] for i in range(1,len(s),3)])
+    codons.extend([s[i:i+3] for i in range(2,len(s),3)])
+    uniq = set(codons)
+    a = [(c,codons.count(c)) for c in uniq if len(c)==3]
 
+    return sorted(a)
 
 def test_get_3mer_usage_chart():
     s = 'CCGGAAGAGCTTACTTAGGAAGAA'
@@ -277,7 +318,11 @@ def read_column(file_name, column_number):
     Reads column column_number from file file_name
     and returns the values as floats in a list.
     """
-    return None
+    with open(file_name,'r') as fid:
+        fil = fid.read().splitlines()
+    column_number -=1
+    a =[l.split()[column_number] for l in fil]
+    return map(float,a)
 
 
 def test_read_column():
@@ -315,7 +360,13 @@ def character_statistics(file_name):
     Use the isalpha() method to figure out
     whether the character is in the alphabet.
     """
-    return None
+    with open (file_name,'r') as fid:
+    	arxeio = fid.read()
+    arxeio = arxeio.lower()
+    frequencies = [(arxeio.count(c), c) for c in set(arxeio) if c.isalpha()]
+    x = max(frequencies)
+    y = min(frequencies)
+    return (x[1], y[1])
 
 
 def test_character_statistics():
