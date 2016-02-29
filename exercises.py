@@ -233,6 +233,9 @@ def test_get_reverse_complement():
     assert get_reverse_complement('CCGGAAGAGCTTACTTAG') == 'CTAAGTAAGCTCTTCCGG'
     assert get_reverse_complement('ccggaagagcttacttag') == 'CTAAGTAAGCTCTTCCGG'
 
+def test_get_reverse_complement():
+    assert get_reverse_complement('CAGgcatggctagGCGGAT') == 'ATCCGCCTAGCCATGCCTG'
+
 
 # ------------------------------------------------------------------------------
 
@@ -443,5 +446,12 @@ def pythagorean_triples(n):
 
 # ------------------------------------------------------------------------------
 
+#def test_pythagorean_triples():
+ #   pass  # so far we do not test anything, check also test coverage
+
+
 def test_pythagorean_triples():
-    pass  # so far we do not test anything, check also test coverage
+    assert pythagorean_triples(5) == [(3,4,5)]
+
+def test_pythagorean_triples():
+    assert pythagorean_triples(13) == [(3,4,5),(6,8,10),(5,12,13)]
